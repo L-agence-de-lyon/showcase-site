@@ -1,29 +1,20 @@
 <template>
-  <div class="text-center">
-    <img class="m-auto" alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+  <Nav />
+  <router-view class="px-11 mt-20" />
 </template>
 
 <script>
+import Nav from './components/nav/Nav.vue';
 import './styles/app.css';
-import HelloWorld from "./components/HelloWorld.vue";
 
 export default {
-  name: "App",
+  name: 'App',
   components: {
-    HelloWorld,
-  },
-};
+    Nav
+  }
+}
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
