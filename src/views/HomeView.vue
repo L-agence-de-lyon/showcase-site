@@ -1,6 +1,6 @@
 <template>
-  <div>
-
+  <div class="home flex items-center">
+   
   </div>
 </template>
 
