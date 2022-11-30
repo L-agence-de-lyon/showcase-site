@@ -1,5 +1,5 @@
 <template>
-   <button>{{text}}</button>
+   <button class="button">{{text}}</button>
 </template>
 <script>
 
@@ -11,5 +11,6 @@ export default {
 }
 </script>
 <style>
-    
+    .button{
+    }
 </style>
