@@ -13,12 +13,13 @@
     "core-js": "^3.6.5",
     "sass-loader": "^13.1.0",
     "vue": "^3.2.41",
-    "vue-router": "^4.0.3"
+    "vue-router": "^4.0.3",
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.2",
     "@storybook/addon-actions": "^6.5.13",
-    "@storybook/addon-essentials": "^6.5.13",
+    "@storybook/addon-essentials": "^6.4.22",
     "@storybook/addon-interactions": "^6.5.13",
     "@storybook/addon-links": "^6.5.13",
     "@storybook/builder-webpack5": "^6.5.13",
