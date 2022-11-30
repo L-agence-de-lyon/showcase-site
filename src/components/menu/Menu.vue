@@ -31,10 +31,12 @@
           <div>
             <div class="image-container">
               <div class="image">
-                <div class="menu-image" :style="`background-image:url(${require('../../assets/services.png')}`">
-                </div>
-          </div>
-          <div class="slogan-container">
+                <img
+            class="object-contain menu-image"
+            src="../../assets/services.png"
+          />
+              </div>
+              <div class="slogan-container">
             <h6>We shape innovation,
               <br />collaboration and
               <br/> design built-in</h6>
@@ -132,13 +134,16 @@ export default {
   overflow: hidden;
   width: 100%;
   max-width: 100%;
-  user-select: none;
 }
 
 .col .link span {
   transform: translate3d(0px, 150%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
   transform-style: preserve-3d;
   user-select: none;
+}
+
+.menu-container.close .col .link span.link-number {
+  line-height: inherit;
 }
 
 .menu-container.close .col .link span.link-number {
@@ -227,15 +232,6 @@ export default {
 
 .menu-container.open .image-container {
   transform: translate3d(0px, 0vw, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-}
-
-.menu-image {
-  background-position: center;
-  background-size: auto;
-  width: 100%;
-  height: 100%;
-  background-repeat: no-repeat;
-  transition: background-image 0.5s;
 }
 
 .image {
