@@ -12,7 +12,7 @@
           >Customer Stories</router-link
         >
         <router-link class="router-link" to="/about">About us</router-link>
-        <router-link class="router-link" to="/blog">Blog</router-link>
+        <router-link class="router-link" to="/blog">Contact</router-link>
       </div>
 
       <div>
