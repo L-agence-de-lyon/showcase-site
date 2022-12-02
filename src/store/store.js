@@ -9,7 +9,11 @@ const SiteStore = {
   },
   mutations: {
     handleDrawer(state) {
+      const body = document.body;
       state.open = !state.open;
+
+      if (state.open) body.style.overflow = "hidden";
+      else body.style.overflow = "auto";
     },
   },
   getters: {

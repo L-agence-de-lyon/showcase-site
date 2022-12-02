@@ -12,7 +12,7 @@
           >Customer Stories</router-link
         >
         <router-link class="router-link" to="/about">About us</router-link>
-        <router-link class="router-link" to="/blog">Contact</router-link>
+        <router-link class="router-link" to="/contact">Contact</router-link>
       </div>
 
       <div>
@@ -42,6 +42,8 @@ export default {
 <style>
 .nav-container {
   position: fixed;
+  z-index: 50;
+  background: #f8f8f8;
 }
 
 .router-links-container {

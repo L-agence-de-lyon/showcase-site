@@ -1,7 +1,8 @@
 <template lang="">
   <div class="menu-container" :class="isOpen ? 'open' : 'close'">
+    <div class="backdrop"></div>
     <div class="menu">
-      <div class="menu-cols flex">
+      <div class="menu-cols flex overflow-auto">
         <div class="col menu-left">
           <div @mouseover="onHover('services')" class="link flex">
             <span class="link-number block">01</span>
@@ -18,13 +19,17 @@
             <span>Projects</span>
             <div class="border-bottom"></div>
           </div>
-          <div @mouseover="onHover('contact')" class="link">
+          <div
+            @click="changeRouter('contact')"
+            @mouseover="onHover('contact')"
+            class="link"
+          >
             <span class="link-number">04</span>
             <span>Contact</span>
             <div class="border-bottom"></div>
           </div>
           <div class="menu-footer">
-            <div> <p class="text-xs">©2022. All Rights Reserved.</p></div>
+            <div><p class="text-xs">©2022. All Rights Reserved.</p></div>
           </div>
         </div>
         <div class="col menu-right justify-center">
@@ -32,16 +37,17 @@
             <div class="image-container">
               <div class="image">
                 <img
-            class="object-contain menu-image"
-            src="../../assets/services.png"
-          />
+                  class="object-contain menu-image"
+                  src="../../assets/services.png"
+                />
               </div>
               <div class="slogan-container">
-            <h6>We shape innovation,
-              <br />collaboration and
-              <br/> design built-in</h6>
-          </div>
-          </div>
+                <h6>
+                  We shape innovation, <br />collaboration and <br />
+                  design built-in
+                </h6>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -59,7 +65,11 @@ export default {
     ...mapMutations("SiteStore", ["handleDrawer"]),
     onHover(src) {
       imageChangeOnMouseHover(src);
-    }
+    },
+    changeRouter(route) {
+      this.handleDrawer();
+      this.$router.push(route);
+    },
   },
   computed: {
     ...mapGetters("SiteStore", ["isOpen"]),
@@ -68,7 +78,7 @@ export default {
 </script>
 <style lang="css">
 .menu-container {
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   right: 0;
@@ -87,6 +97,9 @@ export default {
   -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
+  pointer-events: none;
+  z-index: 23;
+  user-select: none;
   pointer-events: none;
 }
 
@@ -137,7 +150,8 @@ export default {
 }
 
 .col .link span {
-  transform: translate3d(0px, 150%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
+  transform: translate3d(0px, 150%, 0px) scale3d(1, 1, 1) rotateX(0deg)
+    rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
   transform-style: preserve-3d;
 }
 
@@ -154,7 +168,8 @@ export default {
 }
 
 .menu-container.open .menu .menu-cols .col .link span {
-  transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
+  transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg)
+    rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
 }
 
 .menu-container.open .menu .menu-cols .col .link .border-bottom {
@@ -201,7 +216,8 @@ export default {
   width: 100%;
   height: 100%;
   background-color: #121011;
-  transform: translate3d(0px, -100%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
+  transform: translate3d(0px, -100%, 0px) scale3d(1, 1, 1) rotateX(0deg)
+    rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
   transform-style: preserve-3d;
   pointer-events: none;
   transition: 0.7s;
@@ -212,21 +228,26 @@ export default {
 }
 
 .menu-container.open .menu-bg {
-  transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
+  transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg)
+    rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
 }
 
 .menu-container.open {
-  transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
+  transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg)
+    rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
   will-change: transform;
+  pointer-events: all;
 }
 
 .image-container {
-  transform: translate3d(0px, -50vw, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
+  transform: translate3d(0px, -50vw, 0px) scale3d(1, 1, 1) rotateX(0deg)
+    rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
   transition: 0.7s;
 }
 
 .menu-container.open .image-container {
-  transform: translate3d(0px, 0vw, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
+  transform: translate3d(0px, 0vw, 0px) scale3d(1, 1, 1) rotateX(0deg)
+    rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
 }
 
 .image {
@@ -248,13 +269,15 @@ export default {
   align-items: center;
   border: 1px solid #000;
   border-radius: 0.3vw;
-  background-color: rgba(250, 247, 247, .06);
+  background-color: rgba(250, 247, 247, 0.06);
   transform-style: preserve-3d;
 }
 
 .link:hover span {
   color: #121011;
-  text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+  text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff,
+    1px 1px 0 #fff;
+  transition: 0.2s !important;
 }
 
 .link-number {
@@ -262,7 +285,7 @@ export default {
   top: -12px;
   font-size: max(11px, 1.25vw);
   line-height: 1;
-  margin-right: calc(calc(100vw/32)*.8);
+  margin-right: calc(calc(100vw / 32) * 0.8);
 }
 
 .menu-footer {
@@ -276,7 +299,7 @@ export default {
   padding-bottom: 4rem;
   padding-top: 1.8rem;
   padding-left: 2rem;
-  opacity: .6;
+  opacity: 0.6;
 }
 
 .slogan-container {
@@ -289,6 +312,33 @@ export default {
   font-size: 35px;
   line-height: 40px;
   font-weight: 400;
-  letter-spacing: -.02em;
+  letter-spacing: -0.02em;
+}
+
+.menu-container .backdrop {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: #f8f8f8;
+  user-select: none;
+  touch-action: none;
+  pointer-events: none;
+  opacity: 0;
+  transition: 0.5s;
+}
+
+.menu-container.close .backdrop {
+  transition: 0.5s;
+}
+
+.menu-container.open .backdrop {
+  opacity: 1;
+}
+.menu-container .menu-cols {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+.menu-container .menu-cols::-webkit-scrollbar {
+  display: none;
 }
 </style>
