@@ -1,5 +1,6 @@
 <template>
-   <swiper
+  <Nav />
+  <swiper
     :direction="'vertical'"
     :slidesPerView="'auto'"
     :freeMode="true"
@@ -12,7 +13,6 @@
     class="mySwiper"
   >
     <swiper-slide>
-  <Nav />
   <MenuVue />
   <router-view class="px-11 mt-20" />
 </swiper-slide>

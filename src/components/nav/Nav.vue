@@ -3,7 +3,7 @@
     class="nav-container flex justify-between py-6 px-11 w-full top-0 items-center"
   >
     <div>
-      <h1 class="font-bold text-2xl cursor-pointer">AD69.</h1>
+      <h1 class="font-bold text-2xl cursor-pointer" @click="$router.push({name: 'home'})">AD69.</h1>
     </div>
     <div class="flex items-center space-x-3 router-links-container">
       <div :style="`opacity: ${isOpen ? 0 : 1}; transition:opacity 0.3s`">
@@ -12,7 +12,7 @@
           >Customer Stories</router-link
         >
         <router-link class="router-link" to="/about">About us</router-link>
-        <router-link class="router-link" to="/blog">Blog</router-link>
+        <router-link class="router-link" to="/blog">Contact</router-link>
       </div>
 
       <div>
@@ -42,6 +42,8 @@ export default {
 <style>
 .nav-container {
   position: fixed;
+  z-index: 4;
+  background-color: beige;
 }
 
 .router-links-container {
