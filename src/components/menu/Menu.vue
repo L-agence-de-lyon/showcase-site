@@ -138,6 +138,11 @@ export default {
 .col .link span {
   transform: translate3d(0px, 150%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
   transform-style: preserve-3d;
+  user-select: none;
+}
+
+.menu-container.close .col .link span.link-number {
+  line-height: inherit;
 }
 
 .menu-container.close .col .link span.link-number {
