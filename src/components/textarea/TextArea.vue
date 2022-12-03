@@ -15,7 +15,8 @@
         autocomplete="message"
         id="message"
         name="message"
-        class="input custom-scroll-bar message-textarea"
+        :class="error ? 'input-error' : ''"
+        class="input"
         v-model="modelValue"
         style="
           width: 100%;
@@ -40,6 +41,7 @@ export default {
     label: String,
     onChange: Function,
     name: String,
+    error: Boolean
   },
 };
 </script>
@@ -50,12 +52,13 @@ export default {
   font-weight: 400;
   position: absolute;
 }
+
 .textarea-container label {
   bottom: 47px;
   transition: 0.3s;
 }
 
-.textarea-container label.hasValue{
-    opacity: 0;
+.textarea-container label.hasValue {
+  opacity: 0;
 }
 </style>

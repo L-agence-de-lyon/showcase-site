@@ -2,22 +2,29 @@
   <div>
     <div class="contact-section md:px-20">
       <div class="mt-20 flex justify-between items-center">
-        <h4 class="text-5xl">
+        <div>
+          <span class="text-sm block mb-4">Votre demande</span>
+          <h4 class="text-6xl" style="color:#151515">
           Parlez-nous de <br />
           votre nouveau projet<br />
           ambitieux ou posez- <br />
           nous une question.
         </h4>
+        </div>
+
         <div class="form-stepper-num">
-          <h4 class="">{{ form + 1 }}/4</h4>
+          <div class="flex items-center">
+            <h4 class="stepper-num" :style="'--value:' + form"></h4>
+          <h4 class="">/4</h4>
+          </div>
           <div
-            :class="form > 0 ? 'opacity-1' : 'opacity-0 cursor-default'"
-            class="flex space-x-3 justify-end ml-auto cursor-pointer relative z-10 w-fit"
+            :class="form > 0 ? 'opacity-1' : 'opacity-0 !cursor-default'"
+            class="flex space-x-5 justify-end ml-auto cursor-pointer relative z-10 w-fit mt-7 items-center"
             style="transition: 0.5s"
             @click="backForm"
           >
             <ArrowUturnLeftIcon class="h-6 w-6" />
-            <span>Prev</span>
+            <span class="text-xs">Prev</span>
           </div>
         </div>
       </div>
@@ -31,16 +38,16 @@
             class="option-1 flex items-center space-x-3 cursor-pointer"
             :class="selected === 1 ? 'option-selected' : ''"
           >
-            <div class="checkbox"></div>
-            <span class="option-text">Question Général</span>
+            <div :class="selectedError === true ? 'error' : ''" class="checkbox"></div>
+            <span :class="selectedError === true ? 'error' : ''" class="option-text">Question ?</span>
           </label>
           <label
             @click="setSelected(2)"
             class="option-2 flex items-center space-x-3 cursor-pointer"
             :class="selected === 2 ? 'option-selected' : ''"
           >
-            <div class="checkbox"></div>
-            <span class="option-text">Nouveau Projet</span>
+            <div :class="selectedError === true ? 'error' : ''" class="checkbox"></div>
+            <span :class="selectedError === true ? 'error' : ''" class="option-text">Nouveau Projet</span>
           </label>
         </div>
         <div
@@ -52,13 +59,14 @@
               @onChange="onChange"
               :name="'name'"
               :label="'Nom Prénom *'"
+              :error="errors.name"
             />
           </div>
           <div style="width: 67%">
             <InputVue
               @onChange="onChange"
               :name="'society'"
-              :label="'Nom de l\'entreprise *'"
+              :label="'Nom de l\'entreprise'"
             />
           </div>
         </div>
@@ -71,6 +79,7 @@
               @onChange="onChange"
               :name="'message'"
               :label="'Message *'"
+              :error="errors.message"
             />
           </div>
         </div>
@@ -79,7 +88,7 @@
           class="option flex flex-col space-y-8"
         >
           <div style="width: 67%">
-            <InputVue @onChange="onChange" :name="'email'" :label="'Email *'" />
+            <InputVue :error="errors.email" @onChange="onChange" :name="'email'" :label="'Email *'" />
           </div>
         </div>
       </div>
@@ -95,6 +104,7 @@
 import InputVue from "../components/input/Input.vue";
 import TextAreaVue from "../components/textarea/TextArea.vue";
 import { ArrowUturnLeftIcon } from "@heroicons/vue/24/solid";
+import axios from "axios";
 
 export default {
   name: "Contact",
@@ -106,6 +116,7 @@ export default {
   data() {
     return {
       selected: 0,
+      selectedError: false,
       form: 0,
       formsValue: {
         name: "",
@@ -114,31 +125,85 @@ export default {
         email: "",
         type: "",
       },
+      errors: {
+        name: false,
+        message: false,
+        email: false,
+        type: false
+      }
     };
   },
   methods: {
     setSelected(selected) {
       this.selected = selected;
+      this.selectedError = false;
       switch (selected) {
         case 0:
-          this.type = "Question Général";
+          this.formsValue.type = "Question Général";
           break;
         case 1:
-          this.type = "Nouveau Projet";
+          this.formsValue.type = "Nouveau Projet";
           break;
         default:
-          this.type = "Question Général";
+          this.formsValue.type = "Question Général";
       }
     },
     changeForm() {
-      if (this.form < 3) return (this.form += 1);
+      let isValid = false
+      switch (this.form) {
+        case 0:
+          if (this.selected == 0) { isValid = false; this.selectedError = true }
+          else { isValid = true }
+          break;
+        case 1:
+          if (!this.formsValue.name) {
+            this.errors.name = true;
+            isValid = false;
+          }
+          else {
+            this.errors.name = false; isValid = true;
+          }
+          break;
+        case 2:
+          if (!this.formsValue.message) {
+            this.errors.message = true;
+            isValid = false;
+          }
+          else {
+            this.errors.message = false; isValid = true;
+          }
+          break;
+        case 3:
+          if (this.formsValue.email) {
+            this.errors.email = false;
+            this.submit();
+          } else {
+            this.errors.email = true;
+          }
+          break;
+
+        default: isValid = false;
+      }
+
+      if (isValid && this.form < 3) return (this.form += 1);
     },
     onChange(e) {
+      if (e.target.value) this.errors[e.target.name] = false;
+      else this.errors[e.target.name] = true;
       this.formsValue[e.target.name] = e.target.value;
     },
     backForm() {
       if (!this.form < 1) this.form -= 1;
     },
+    async submit() {
+      const { data } = await axios.post(
+        "http://localhost:3000/api/mail",
+        {
+          ...this.formsValue,
+        }
+      );
+      console.log(data);
+    }
   },
 };
 </script>
@@ -160,10 +225,11 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: 0.3s;
 }
 
 .option-text {
-  font-size: 2.4vw;
+  font-size: 1.8vw;
   line-height: 3vw;
   font-weight: 500;
 }
@@ -212,6 +278,10 @@ export default {
   content: "";
   opacity: 0;
   transition: 0.4s;
+}
+
+.checkbox.error:after {
+  background: #e43052;
 }
 
 .form {
@@ -291,31 +361,68 @@ form::after {
   font-weight: 600;
   overflow: hidden;
 }
+
 .button-form-next button::after {
   content: "";
   width: 100%;
   height: 100%;
-  background: black;
+  background: #151515;
   position: absolute;
-  top: 0;
+  top: -50%;
   left: 0;
   z-index: 1;
-  transform: translateY(110%);
   transition: 0.3s;
   color: white;
+  transform: translate(0px, -75%);
 }
+
 .button-form-next button:hover {
   color: white !important;
 }
+
 .button-form-next button:hover::after {
-  transform: translateY(0%);
+  transform: translate(0px, 0%);
+  top: 0;
 }
 
 .form-stepper-num h4 {
   position: relative;
-  font-size: 14vw;
-  line-height: 14vw;
-  font-weight: 300;
+  font-size: 12vw;
+  line-height: 12vw;
   text-align: right;
+  color: #151515;
+  font-weight: 100;
+}
+
+.checkbox.error {
+  box-shadow: 0 0 0 0.2rem #e4305247 !important;
+  border: 1px solid #e43052 !important;
+  background-color: #e4305229 !important;
+}
+
+.option-text {
+  transition: 0.3s;
+  color: #151515;
+}
+
+.option-text.error {
+  color: #e43052;
+}
+
+.stepper-num {
+  display: flex;
+  height: 1em;
+  line-height: 1em;
+  overflow-y: hidden;
+}
+
+.stepper-num::before {
+  content: "1\a 2\a 3\a 4\a";
+  position: relative;
+  text-align: center;
+  top: calc(var(--value) * -1em);
+  transition: all 0.8s cubic-bezier(1, 0, 0, 1);
+  white-space: pre;
+  font-weight: lighter;
 }
 </style>

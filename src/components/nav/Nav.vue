@@ -3,7 +3,9 @@
     class="nav-container flex justify-between py-6 px-11 w-full top-0 items-center"
   >
     <div>
-      <h1 class="font-bold text-2xl cursor-pointer">AD69.</h1>
+      <router-link to="/"> 
+        <h1 class="font-bold text-2xl cursor-pointer">AD69.</h1> 
+      </router-link>
     </div>
     <div class="flex items-center space-x-3 router-links-container">
       <div :style="`opacity: ${isOpen ? 0 : 1}; transition:opacity 0.3s`">
@@ -68,7 +70,7 @@ export default {
 .router-link {
   font-size: 0.85rem;
   color: #151515;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   position: relative;

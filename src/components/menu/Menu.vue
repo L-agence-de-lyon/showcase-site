@@ -4,19 +4,20 @@
     <div class="menu">
       <div class="menu-cols flex overflow-auto">
         <div class="col menu-left">
-          <div @mouseover="onHover('services')" class="link flex">
+          <div @mouseover="onHover('progressive')" class="link flex">
             <span class="link-number block">01</span>
             <span class="block">Services</span>
             <div class="border-bottom"></div>
+            <div class="link-hover"></div>
           </div>
           <div @mouseover="onHover('about')" class="link">
             <span class="link-number">02</span>
-            <span>About</span>
+            <span>À-propos</span>
             <div class="border-bottom"></div>
           </div>
           <div @mouseover="onHover('projects')" class="link">
             <span class="link-number">03</span>
-            <span>Projects</span>
+            <span>Projets</span>
             <div class="border-bottom"></div>
           </div>
           <div
@@ -33,20 +34,12 @@
           </div>
         </div>
         <div class="col menu-right justify-center">
-          <div>
-            <div class="image-container">
+          <div class="h-full">
+            <div class="image-container h-full">
               <div class="image">
-                <img
-                  class="object-contain menu-image"
-                  src="../../assets/services.png"
-                />
-              </div>
-              <div class="slogan-container">
-                <h6>
-                  We shape innovation, <br />collaboration and <br />
-                  design built-in
-                </h6>
-              </div>
+                <div class="menu-image" :style="`background-image:url(${require('../../assets/svg/progressive.svg')}`">
+                </div>
+          </div>
             </div>
           </div>
         </div>
@@ -150,13 +143,17 @@ export default {
 }
 
 .col .link span {
-  transform: translate3d(0px, 150%, 0px) scale3d(1, 1, 1) rotateX(0deg)
-    rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
+  transform: translate3d(0px, 150%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
   transform-style: preserve-3d;
 }
 
 .menu-container.close .col .link span.link-number {
   line-height: inherit;
+  opacity: 0;
+}
+
+.menu-container.open .col .link span.link-number {
+  opacity: 1;
 }
 
 .menu-container.open .col .link span {
@@ -168,8 +165,7 @@ export default {
 }
 
 .menu-container.open .menu .menu-cols .col .link span {
-  transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg)
-    rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
+  transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
 }
 
 .menu-container.open .menu .menu-cols .col .link .border-bottom {
@@ -200,10 +196,7 @@ export default {
 }
 
 .menu-right {
-  display: flex;
   width: 35%;
-  padding-top: 9vh;
-  padding-bottom: 4rem;
 }
 
 .menu-bg {
@@ -216,8 +209,7 @@ export default {
   width: 100%;
   height: 100%;
   background-color: #121011;
-  transform: translate3d(0px, -100%, 0px) scale3d(1, 1, 1) rotateX(0deg)
-    rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
+  transform: translate3d(0px, -100%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
   transform-style: preserve-3d;
   pointer-events: none;
   transition: 0.7s;
@@ -228,26 +220,31 @@ export default {
 }
 
 .menu-container.open .menu-bg {
-  transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg)
-    rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
+  transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
 }
 
 .menu-container.open {
-  transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg)
-    rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
+  transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
   will-change: transform;
   pointer-events: all;
 }
 
+.menu-image {
+  background-position: left;
+  background-size: auto;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  transition: background-image 0.5s;
+}
+
 .image-container {
-  transform: translate3d(0px, -50vw, 0px) scale3d(1, 1, 1) rotateX(0deg)
-    rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
+  transform: translate3d(0px, -100%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
   transition: 0.7s;
 }
 
 .menu-container.open .image-container {
-  transform: translate3d(0px, 0vw, 0px) scale3d(1, 1, 1) rotateX(0deg)
-    rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
+  transform: translate3d(0px, 0vw, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
 }
 
 .image {
@@ -257,8 +254,8 @@ export default {
   display: -ms-flexbox;
   display: flex;
   overflow: hidden;
-  width: 22rem;
-  height: 38vh;
+  width: 100%;
+  height: 100%;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
@@ -267,10 +264,6 @@ export default {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-  border: 1px solid #000;
-  border-radius: 0.3vw;
-  background-color: rgba(250, 247, 247, 0.06);
-  transform-style: preserve-3d;
 }
 
 .link:hover span {
@@ -334,10 +327,14 @@ export default {
 .menu-container.open .backdrop {
   opacity: 1;
 }
+
 .menu-container .menu-cols {
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  /* Internet Explorer 10+ */
+  scrollbar-width: none;
+  /* Firefox */
 }
+
 .menu-container .menu-cols::-webkit-scrollbar {
   display: none;
 }
