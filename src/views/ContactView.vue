@@ -4,22 +4,33 @@
       <div class="mt-20 flex justify-between items-center">
         <div>
           <span class="text-sm block mb-4">Votre demande</span>
-          <h4 class="text-6xl" style="color:#151515">
-          Parlez-nous de <br />
-          votre nouveau projet<br />
-          ambitieux ou posez- <br />
-          nous une question.
-        </h4>
+          <h4 class="text-6xl" style="color: #151515">
+            Parlez-nous de <br />
+            votre nouveau projet<br />
+            ambitieux ou posez- <br />
+            nous une question.
+          </h4>
         </div>
 
         <div class="form-stepper-num">
           <div class="flex items-center">
             <h4 class="stepper-num" :style="'--value:' + form"></h4>
-          <h4 class="">/4</h4>
+            <h4 class="">/4</h4>
           </div>
           <div
             :class="form > 0 ? 'opacity-1' : 'opacity-0 !cursor-default'"
-            class="flex space-x-5 justify-end ml-auto cursor-pointer relative z-10 w-fit mt-7 items-center"
+            class="
+              flex
+              space-x-5
+              justify-end
+              ml-auto
+              cursor-pointer
+              relative
+              z-10
+              w-fit
+              mt-7
+              items-center
+            "
             style="transition: 0.5s"
             @click="backForm"
           >
@@ -38,16 +49,30 @@
             class="option-1 flex items-center space-x-3 cursor-pointer"
             :class="selected === 1 ? 'option-selected' : ''"
           >
-            <div :class="selectedError === true ? 'error' : ''" class="checkbox"></div>
-            <span :class="selectedError === true ? 'error' : ''" class="option-text">Question ?</span>
+            <div
+              :class="selectedError === true ? 'error' : ''"
+              class="checkbox"
+            ></div>
+            <span
+              :class="selectedError === true ? 'error' : ''"
+              class="option-text"
+              >Question ?</span
+            >
           </label>
           <label
             @click="setSelected(2)"
             class="option-2 flex items-center space-x-3 cursor-pointer"
             :class="selected === 2 ? 'option-selected' : ''"
           >
-            <div :class="selectedError === true ? 'error' : ''" class="checkbox"></div>
-            <span :class="selectedError === true ? 'error' : ''" class="option-text">Nouveau Projet</span>
+            <div
+              :class="selectedError === true ? 'error' : ''"
+              class="checkbox"
+            ></div>
+            <span
+              :class="selectedError === true ? 'error' : ''"
+              class="option-text"
+              >Nouveau Projet</span
+            >
           </label>
         </div>
         <div
@@ -56,6 +81,7 @@
         >
           <div style="width: 67%">
             <InputVue
+              @onBlur="onBlur"
               @onChange="onChange"
               :name="'name'"
               :label="'Nom Prénom *'"
@@ -64,6 +90,7 @@
           </div>
           <div style="width: 67%">
             <InputVue
+              @onBlur="onBlur"
               @onChange="onChange"
               :name="'society'"
               :label="'Nom de l\'entreprise'"
@@ -88,13 +115,60 @@
           class="option flex flex-col space-y-8"
         >
           <div style="width: 67%">
-            <InputVue :error="errors.email" @onChange="onChange" :name="'email'" :label="'Email *'" />
+            <InputVue
+              @onBlur="onBlur"
+              :error="errors.email"
+              @onChange="onChange"
+              :name="'email'"
+              :label="'Email *'"
+            />
           </div>
         </div>
       </div>
       <div class="button-form-next mt-10 pb-3">
-        <button @click="changeForm">
-          <span class="relative z-10"> {{ form === 3 ? "Envoyer" : "Suivant" }}</span>
+        <button
+          :class="sending ? 'sending' : ''"
+          @click="changeForm"
+          :disabled="sent || sending ? true : false"
+        >
+          <svg
+            style="left: 46%"
+            :class="sending && !sent ? 'opacity-1' : 'opacity-0'"
+            class="animate-spin -ml-1 mr-3 h-5 w-5 text-white absolute z-10"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              class="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              stroke-width="4"
+            ></circle>
+            <path
+              class="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            ></path>
+          </svg>
+          <span
+            class="relative z-10"
+            :class="form < 3 && !sending && !sent ? 'actif' : ''"
+            >{{ form === 3 ? "Envoyer" : "Suivant" }}</span
+          >
+          <span
+            class="relative z-10"
+            :class="form === 3 && !sending && !sent ? 'actif' : ''"
+            >Envoyer</span
+          >
+          <span
+            class="relative z-10 flex space-x-2 items-center opacity-50"
+            :class="form === 3 && !sending && sent ? 'actif' : ''"
+            ><p>Envoyé</p>
+            <CheckIcon class="h-4 w-4" />
+          </span>
         </button>
       </div>
     </div>
@@ -103,7 +177,7 @@
 <script>
 import InputVue from "../components/input/Input.vue";
 import TextAreaVue from "../components/textarea/TextArea.vue";
-import { ArrowUturnLeftIcon } from "@heroicons/vue/24/solid";
+import { ArrowUturnLeftIcon, CheckIcon } from "@heroicons/vue/24/solid";
 import axios from "axios";
 
 export default {
@@ -112,6 +186,7 @@ export default {
     InputVue,
     TextAreaVue,
     ArrowUturnLeftIcon,
+    CheckIcon,
   },
   data() {
     return {
@@ -129,8 +204,13 @@ export default {
         name: false,
         message: false,
         email: false,
-        type: false
-      }
+        type: false,
+      },
+      validRegex: {
+        email: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+      },
+      sending: false,
+      sent: false,
     };
   },
   methods: {
@@ -148,33 +228,37 @@ export default {
           this.formsValue.type = "Question Général";
       }
     },
-    changeForm() {
-      let isValid = false
+    checkErrors() {
+      let isValid = false;
       switch (this.form) {
         case 0:
-          if (this.selected == 0) { isValid = false; this.selectedError = true }
-          else { isValid = true }
+          if (this.selected == 0) {
+            isValid = false;
+            this.selectedError = true;
+          } else {
+            isValid = true;
+          }
           break;
         case 1:
           if (!this.formsValue.name) {
             this.errors.name = true;
             isValid = false;
-          }
-          else {
-            this.errors.name = false; isValid = true;
+          } else {
+            this.errors.name = false;
+            isValid = true;
           }
           break;
         case 2:
-          if (!this.formsValue.message) {
+          if (!this.formsValue.message || this.formsValue.message.length <= 1) {
             this.errors.message = true;
             isValid = false;
-          }
-          else {
-            this.errors.message = false; isValid = true;
+          } else {
+            this.errors.message = false;
+            isValid = true;
           }
           break;
         case 3:
-          if (this.formsValue.email) {
+          if (this.formsValue.email && !this.errors.email) {
             this.errors.email = false;
             this.submit();
           } else {
@@ -182,28 +266,49 @@ export default {
           }
           break;
 
-        default: isValid = false;
+        default:
+          isValid = false;
       }
 
+      return { isValid };
+    },
+    changeForm() {
+      const { isValid } = this.checkErrors();
       if (isValid && this.form < 3) return (this.form += 1);
     },
     onChange(e) {
-      if (e.target.value) this.errors[e.target.name] = false;
-      else this.errors[e.target.name] = true;
+      if (e.target.value) {
+        if (
+          this.validRegex[e.target.name] === false ||
+          this.validRegex[e.target.name] === undefined
+        )
+          this.errors[e.target.name] = false;
+        else {
+          if (e.target.value.match(this.validRegex[e.target.name]))
+            this.errors[e.target.name] = false;
+          else this.errors[e.target.name] = true;
+        }
+      } else this.errors[e.target.name] = true;
       this.formsValue[e.target.name] = e.target.value;
     },
+    onBlur() {
+      this.checkErrors();
+    },
     backForm() {
+      this.sent = false;
       if (!this.form < 1) this.form -= 1;
     },
     async submit() {
-      const { data } = await axios.post(
-        "http://localhost:3000/api/mail",
-        {
-          ...this.formsValue,
-        }
-      );
-      console.log(data);
-    }
+      if (this.sending || this.sent) return;
+      this.sending = true;
+      const { data } = await axios.post("http://localhost:3000/api/mail", {
+        ...this.formsValue,
+      });
+      this.sending = false;
+      if (data) {
+        this.sent = true;
+      }
+    },
   },
 };
 </script>
@@ -336,20 +441,11 @@ form::after {
 
 .button-form-next button {
   z-index: 9;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
   width: 10.6rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
+  padding-top: 1.3rem;
+  padding-bottom: 1.3rem;
   justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
   align-items: center;
   border-radius: 10vw;
   border: 1px rgba(0, 0, 0, 0.1) solid;
@@ -424,5 +520,26 @@ form::after {
   transition: all 0.8s cubic-bezier(1, 0, 0, 1);
   white-space: pre;
   font-weight: lighter;
+}
+
+.button-form-next button span {
+  transform: translateY(400%);
+  transition: 0.3s;
+  position: absolute;
+  z-index: 9;
+}
+
+.button-form-next button span.actif {
+  transform: translateY(0%);
+}
+
+.button-form-next button.sending::after {
+  background: #151515;
+  transform: translate(0px, 0%);
+  top: 0;
+}
+
+.button-form-next button:disabled {
+  cursor: not-allowed !important;
 }
 </style>

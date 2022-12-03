@@ -9,6 +9,7 @@
       </div>
       <input
         @input="$emit('onChange', $event)"
+        @blur="$emit('onBlur', $event)"
         :autocomplete="name"
         :id="name"
         :name="name"
