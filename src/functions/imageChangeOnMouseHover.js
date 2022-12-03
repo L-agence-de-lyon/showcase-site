@@ -1,14 +1,11 @@
-let currImage = "progressive";
-let isChanging = false;
+let currImage = "services";
 const imageChangeOnMouseHover = async (src) => {
-  if (currImage === src || isChanging) return;
+  if (currImage === src) return;
   else {
-    isChanging = true;
     const image = document.getElementsByClassName("menu-image")[0];
     var img = require.context("../assets/svg/", false, /\.svg$/);
     image.style.backgroundImage = `url(${img("./" + src + ".svg")})`;
     currImage = src;
-    isChanging = false;
   }
 };
 
