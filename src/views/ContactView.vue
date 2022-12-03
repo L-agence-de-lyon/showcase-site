@@ -301,6 +301,7 @@ export default {
     async submit() {
       if (this.sending || this.sent) return;
       this.sending = true;
+      console.log(process.env.VUE_APP_SERVER_API)
       const { data } = await axios.post(`${process.env.VUE_APP_SERVER_API}api/mail`, {
         ...this.formsValue,
       });
