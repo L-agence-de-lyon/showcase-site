@@ -1,8 +1,5 @@
 <template>
   <Nav />
-  <MenuVue />
-  <router-view class="px-11 mt-20" />
-  <div class="cursor"></div>
   <!-- <swiper
     :direction="'vertical'"
     :slidesPerView="'auto'"
@@ -18,6 +15,7 @@
     <!-- <swiper-slide> -->
   <MenuVue />
   <router-view class="px-11 mt-20" />
+  <div class="cursor"></div>
 <!-- </swiper-slide> -->
   <!-- </swiper> -->
   
