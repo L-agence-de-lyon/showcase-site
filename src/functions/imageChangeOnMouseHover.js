@@ -9,18 +9,4 @@ const imageChangeOnMouseHover = async (src) => {
   }
 };
 
-// function transition(img) {
-//   return new Promise(function (resolve) {
-//     var del = 0.01;
-//     var id = setInterval(changeOpacity, 1);
-//     function changeOpacity() {
-//       img.style.opacity -= del;
-//       if (img.style.opacity <= 0) {
-//         clearInterval(id);
-//         resolve();
-//       }
-//     }
-//   });
-// }
-
 export { imageChangeOnMouseHover };

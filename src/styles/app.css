@@ -1,40 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 
-@font-face { font-family: Lato; 
-    src: 
-        url('../assets/font/Lato-Regular.ttf') format('embedded-opentype'), /* Internet Explorer */
-        url('../assets/font/Lato-Regular.ttf') format('woff2'),             /* Super Modern Browsers */
-        url('../assets/font/Lato-Regular.ttf') format('woff'),              /* Pretty Modern Browsers */
-        url('../assets/font/Lato-Regular.ttf') format('truetype'),          /* Safari, Android, iOS */
-        url('../assets/font/Lato-Regular.ttf') format('svg');               /* Legacy iOS */ 
-} 
-@font-face { font-family: Lora; font-weight: italic;
-    src: 
-        url('../assets/font/Lato-Italic.ttf') format('embedded-opentype'), 
-        url('../assets/font/Lato-Italic.ttf') format('woff2'),             
-        url('../assets/font/Lato-Italic.ttf') format('woff'),              
-        url('../assets/font/Lato-Italic.ttf') format('truetype'),         
-        url('../assets/font/Lato-Italic.ttf') format('svg');               
-} 
-@font-face { font-family: Lora; font-weight: bold;
-    src: 
-        url('../assets/font/Lato-Bold.ttf') format('embedded-opentype'), 
-        url('../assets/font/Lato-Bold.ttf') format('woff2'),             
-        url('../assets/font/Lato-Bold.ttf') format('woff'),              
-        url('../assets/font/Lato-Bold.ttf') format('truetype'),          
-        url('../assets/font/Lato-Bold.ttf') format('svg');               
-} 
-@font-face { font-family: Lora; font-weight: lighter;
-    src: 
-        url('../assets/font/Lato-Light.ttf') format('embedded-opentype'),
-        url('../assets/font/Lato-Light.ttf') format('woff2'),             
-        url('../assets/font/Lato-Light.ttf') format('woff'),              
-        url('../assets/font/Lato-Light.ttf') format('truetype'),         
-        url('../assets/font/Lato-Light.ttf') format('svg');            
-} 
-*{
+body {
+    background: #f8f8f8;
+    color: #151515;
+    overflow-x: hidden !important;
+}
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;

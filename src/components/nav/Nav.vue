@@ -3,7 +3,9 @@
     class="nav-container flex justify-between py-6 px-11 w-full top-0 items-center"
   >
     <div>
-      <h1 class="font-bold text-2xl cursor-pointer" @click="$router.push({name: 'home'})">AD69.</h1>
+      <router-link to="/"> 
+        <h1 class="font-bold text-2xl cursor-pointer">AD69.</h1> 
+      </router-link>
     </div>
     <div class="flex items-center space-x-3 router-links-container">
       <div :style="`opacity: ${isOpen ? 0 : 1}; transition:opacity 0.3s`">
@@ -12,7 +14,7 @@
           >Customer Stories</router-link
         >
         <router-link class="router-link" to="/about">About us</router-link>
-        <router-link class="router-link" to="/blog">Contact</router-link>
+        <router-link class="router-link" to="/contact">Contact</router-link>
       </div>
 
       <div>
@@ -42,8 +44,8 @@ export default {
 <style>
 .nav-container {
   position: fixed;
-  z-index: 4;
-  background-color: beige;
+  z-index: 50;
+  background: #f8f8f8;
 }
 
 .router-links-container {
@@ -68,12 +70,31 @@ export default {
 .router-link {
   font-size: 0.85rem;
   color: #151515;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   position: relative;
   display: inline-block;
   margin-right: 7rem;
   cursor: pointer;
+  overflow: hidden;
+}
+
+.router-link::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  background-color: #151515;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.router-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
 }
 </style>

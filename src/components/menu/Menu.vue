@@ -1,45 +1,46 @@
 <template lang="">
   <div class="menu-container" :class="isOpen ? 'open' : 'close'">
+    <div class="backdrop"></div>
     <div class="menu">
-      <div class="menu-cols flex">
+      <div class="menu-cols flex overflow-auto">
         <div class="col menu-left">
-          <div @mouseover="onHover('services')" class="link flex">
+          <div @mouseover="onHover('progressive')" class="link flex">
             <span class="link-number block">01</span>
             <span class="block">Services</span>
             <div class="border-bottom"></div>
+            <div class="link-hover"></div>
           </div>
           <div @mouseover="onHover('about')" class="link">
             <span class="link-number">02</span>
-            <span>About</span>
+            <span>À-propos</span>
             <div class="border-bottom"></div>
           </div>
           <div @mouseover="onHover('projects')" class="link">
             <span class="link-number">03</span>
-            <span>Projects</span>
+            <span>Projets</span>
             <div class="border-bottom"></div>
           </div>
-          <div @mouseover="onHover('contact')" class="link">
+          <div
+            @click="changeRouter('contact')"
+            @mouseover="onHover('contact')"
+            class="link"
+          >
             <span class="link-number">04</span>
             <span>Contact</span>
             <div class="border-bottom"></div>
           </div>
           <div class="menu-footer">
-            <div> <p class="text-xs">©2022. All Rights Reserved.</p></div>
+            <div><p class="text-xs">©2022. All Rights Reserved.</p></div>
           </div>
         </div>
         <div class="col menu-right justify-center">
-          <div>
-            <div class="image-container">
+          <div class="h-full">
+            <div class="image-container h-full">
               <div class="image">
-                <div class="menu-image" :style="`background-image:url(${require('../../assets/services.png')}`">
+                <div class="menu-image" :style="`background-image:url(${require('../../assets/svg/progressive.svg')}`">
                 </div>
           </div>
-          <div class="slogan-container">
-            <h6>We shape innovation,
-              <br />collaboration and
-              <br/> design built-in</h6>
-          </div>
-          </div>
+            </div>
           </div>
         </div>
       </div>
@@ -57,7 +58,11 @@ export default {
     ...mapMutations("SiteStore", ["handleDrawer"]),
     onHover(src) {
       imageChangeOnMouseHover(src);
-    }
+    },
+    changeRouter(route) {
+      this.handleDrawer();
+      this.$router.push(route);
+    },
   },
   computed: {
     ...mapGetters("SiteStore", ["isOpen"]),
@@ -66,7 +71,7 @@ export default {
 </script>
 <style lang="css">
 .menu-container {
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   right: 0;
@@ -85,6 +90,9 @@ export default {
   -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
+  pointer-events: none;
+  z-index: 23;
+  user-select: none;
   pointer-events: none;
 }
 
@@ -136,7 +144,7 @@ export default {
 }
 
 .col .link span {
-  transform: translate3d(0px, 150%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
+  transform: translate3d(0px, 160%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
   transform-style: preserve-3d;
   user-select: none;
 }
@@ -147,6 +155,11 @@ export default {
 
 .menu-container.close .col .link span.link-number {
   line-height: inherit;
+  opacity: 0;
+}
+
+.menu-container.open .col .link span.link-number {
+  opacity: 1;
 }
 
 .menu-container.open .col .link span {
@@ -189,10 +202,7 @@ export default {
 }
 
 .menu-right {
-  display: flex;
   width: 35%;
-  padding-top: 9vh;
-  padding-bottom: 4rem;
 }
 
 .menu-bg {
@@ -222,10 +232,20 @@ export default {
 .menu-container.open {
   transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
   will-change: transform;
+  pointer-events: all;
+}
+
+.menu-image {
+  background-position: left;
+  background-size: auto;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  transition: background-image 0.5s;
 }
 
 .image-container {
-  transform: translate3d(0px, -50vw, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
+  transform: translate3d(0px, -100%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
   transition: 0.7s;
 }
 
@@ -249,8 +269,8 @@ export default {
   display: -ms-flexbox;
   display: flex;
   overflow: hidden;
-  width: 22rem;
-  height: 38vh;
+  width: 100%;
+  height: 100%;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
@@ -259,15 +279,13 @@ export default {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-  border: 1px solid #000;
-  border-radius: 0.3vw;
-  background-color: rgba(250, 247, 247, .06);
-  transform-style: preserve-3d;
 }
 
 .link:hover span {
   color: #121011;
-  text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+  text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff,
+    1px 1px 0 #fff;
+  transition: 0.2s !important;
 }
 
 .link-number {
@@ -275,7 +293,7 @@ export default {
   top: -12px;
   font-size: max(11px, 1.25vw);
   line-height: 1;
-  margin-right: calc(calc(100vw/32)*.8);
+  margin-right: calc(calc(100vw / 32) * 0.8);
 }
 
 .menu-footer {
@@ -289,7 +307,7 @@ export default {
   padding-bottom: 4rem;
   padding-top: 1.8rem;
   padding-left: 2rem;
-  opacity: .6;
+  opacity: 0.6;
 }
 
 .slogan-container {
@@ -302,6 +320,37 @@ export default {
   font-size: 35px;
   line-height: 40px;
   font-weight: 400;
-  letter-spacing: -.02em;
+  letter-spacing: -0.02em;
+}
+
+.menu-container .backdrop {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: #f8f8f8;
+  user-select: none;
+  touch-action: none;
+  pointer-events: none;
+  opacity: 0;
+  transition: 0.5s;
+}
+
+.menu-container.close .backdrop {
+  transition: 0.5s;
+}
+
+.menu-container.open .backdrop {
+  opacity: 1;
+}
+
+.menu-container .menu-cols {
+  -ms-overflow-style: none;
+  /* Internet Explorer 10+ */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.menu-container .menu-cols::-webkit-scrollbar {
+  display: none;
 }
 </style>
