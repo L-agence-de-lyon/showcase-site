@@ -2,7 +2,7 @@
   <div>
     <div class="contact-section md:px-20">
       <div class="mt-20 flex justify-between items-center">
-        <div>
+        <div class="select-none">
           <span class="text-sm block mb-4">Votre demande</span>
           <h4 class="text-6xl" style="color: #151515; font-weight: 600">
             Parlez-nous de <br />
@@ -13,7 +13,7 @@
         </div>
 
         <div class="form-stepper-num">
-          <div class="flex items-center">
+          <div class="flex items-center select-none">
             <h4 class="stepper-num" :style="'--value:' + form"></h4>
             <h4 class="">/4</h4>
           </div>
@@ -368,6 +368,7 @@ export default {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   cursor: pointer;
   padding-left: 0px;
+  user-select: none;
 }
 
 .option::after,
@@ -453,8 +454,8 @@ form::after {
   z-index: 9;
   display: flex;
   width: 10.6rem;
-  padding-top: 1.3rem;
-  padding-bottom: 1.3rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
   justify-content: center;
   align-items: center;
   border-radius: 10vw;
