@@ -4,7 +4,7 @@
       <div class="mt-20 flex justify-between items-center">
         <div>
           <span class="text-sm block mb-4">Votre demande</span>
-          <h4 class="text-6xl" style="color: #151515">
+          <h4 class="text-6xl" style="color: #151515; font-weight: 600">
             Parlez-nous de <br />
             votre nouveau projet<br />
             ambitieux ou posez- <br />
@@ -39,7 +39,7 @@
           </div>
         </div>
       </div>
-      <div class="form mt-28">
+      <div class="form mt-28 flex">
         <div
           :class="form === 0 ? 'actif' : ''"
           class="option flex flex-col space-y-4"
@@ -260,9 +260,10 @@ export default {
         case 3:
           if (this.formsValue.email && !this.errors.email) {
             this.errors.email = false;
-            this.submit();
+            isValid = true;
           } else {
             this.errors.email = true;
+            isValid = false;
           }
           break;
 
@@ -275,6 +276,7 @@ export default {
     changeForm() {
       const { isValid } = this.checkErrors();
       if (isValid && this.form < 3) return (this.form += 1);
+      if (isValid && this.form === 3) return this.submit();
     },
     onChange(e) {
       if (e.target.value) {
@@ -301,9 +303,16 @@ export default {
     async submit() {
       if (this.sending || this.sent) return;
       this.sending = true;
-      const { data } = await axios.post("http://localhost:3000/api/mail", {
-        ...this.formsValue,
-      });
+      const { data } = await axios.post(
+        `${process.env.VUE_APP_SERVER_API}api/mail`,
+        { ...this.formsValue },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
+      );
       this.sending = false;
       if (data) {
         this.sent = true;
@@ -401,18 +410,18 @@ form::after {
 .form .option {
   opacity: 0;
   z-index: 0;
-  display: inline-block;
   vertical-align: top;
-  width: 0;
+  width: 100%;
   white-space: normal;
   text-align: left;
   left: 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
   user-select: none;
   touch-action: none;
   position: absolute;
-  position: absolute;
-  height: 0;
-  display: -webkit-box;
+  transition: opacity 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19) 0.3s;
+  pointer-events: none;
 }
 
 .form .actif {
@@ -426,6 +435,7 @@ form::after {
   position: relative;
   height: 100%;
   width: 100%;
+  pointer-events: all;
 }
 
 .option .option-selected .checkbox:after {

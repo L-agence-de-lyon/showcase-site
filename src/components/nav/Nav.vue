@@ -77,5 +77,24 @@ export default {
   display: inline-block;
   margin-right: 7rem;
   cursor: pointer;
+  overflow: hidden;
+}
+
+.router-link::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  background-color: #151515;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.router-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
 }
 </style>
