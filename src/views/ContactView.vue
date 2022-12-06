@@ -175,6 +175,7 @@
   </div>
 </template>
 <script>
+
 import InputVue from "../components/input/Input.vue";
 import TextAreaVue from "../components/textarea/TextArea.vue";
 import { ArrowUturnLeftIcon, CheckIcon } from "@heroicons/vue/24/solid";

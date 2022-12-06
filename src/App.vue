@@ -12,17 +12,19 @@
     :modules="modules"
     class="mySwiper"
   > -->
-    <!-- <swiper-slide> -->
+  <!-- <swiper-slide> -->
+  <TransitionPage />
   <MenuVue />
   <router-view class="px-11 mt-20" />
   <div class="cursor"></div>
-<!-- </swiper-slide> -->
+  <!-- </swiper-slide> -->
   <!-- </swiper> -->
-  
+
 </template>
 
 <script>
 import MenuVue from "./components/menu/Menu.vue";
+import TransitionPage from "./Transition.vue";
 import Nav from "./components/nav/Nav.vue";
 import gsap from "gsap";
 import "./styles/app.css";
@@ -39,10 +41,11 @@ export default {
   components: {
     Nav,
     MenuVue,
+    TransitionPage
   },
   methods: {
     updateCursor(e) {
-      gsap.to(".cursor", 0.6, {
+      gsap.to(".cursor", 0.3, {
         css: {
           left: e.pageX,
           top: e.pageY

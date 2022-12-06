@@ -253,15 +253,6 @@ export default {
   transform: translate3d(0px, 0vw, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
 }
 
-.menu-image {
-  background-position: center;
-  background-size: auto;
-  width: 100%;
-  height: 100%;
-  background-repeat: no-repeat;
-  transition: background-image 0.5s;
-}
-
 .image {
   position: relative;
   display: -webkit-box;

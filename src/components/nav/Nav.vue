@@ -3,18 +3,16 @@
     class="nav-container flex justify-between py-6 px-11 w-full top-0 items-center"
   >
     <div>
-      <router-link to="/"> 
-        <h1 class="font-bold text-2xl cursor-pointer">AD69.</h1> 
-      </router-link>
+        <h1 @click="changeRouter('/')" class="font-bold text-2xl cursor-pointer">AD69.</h1> 
     </div>
     <div class="flex items-center space-x-3 router-links-container">
       <div :style="`opacity: ${isOpen ? 0 : 1}; transition:opacity 0.3s`">
-        <router-link class="router-link" to="/">Services</router-link>
-        <router-link class="router-link" to="/customer"
-          >Customer Stories</router-link
+        <span @click="changeRouter('/')" class="router-link" to="/">Services</span>
+        <span @click="changeRouter('/customer')" class="router-link" to="/customer"
+          >Customer Stories</span
         >
-        <router-link class="router-link" to="/about">About us</router-link>
-        <router-link class="router-link" to="/contact">Contact</router-link>
+        <span @click="changeRouter('/about')" class="router-link" to="/about">About us</span>
+        <span @click="changeRouter('/contact')" class="router-link" to="/contact">Contact</span>
       </div>
 
       <div>
@@ -27,7 +25,7 @@
 <script>
 import BurgerMenu from "./burger-menu/BurgerMenu.vue";
 import { mapGetters, mapMutations } from "vuex";
-
+import gsap from "gsap";
 export default {
   name: "Nav",
   components: {
@@ -35,6 +33,16 @@ export default {
   },
   methods: {
     ...mapMutations("SiteStore", ["handleDrawer"]),
+    changeRouter(link) {
+      var tl = gsap.timeline();
+      tl.to(".container-transition-screen", {
+        duration: 0.4,
+        opacity: 1
+      })
+      setTimeout(() => {
+        this.$router.push(link);
+      }, 400)
+    }
   },
   computed: {
     ...mapGetters("SiteStore", ["isOpen"]),
