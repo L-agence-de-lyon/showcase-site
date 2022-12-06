@@ -48,7 +48,8 @@ export default {
       gsap.to(".cursor", 0.3, {
         css: {
           left: e.pageX,
-          top: e.pageY
+          top: e.pageY,
+          opacity: 1 
         }
       });
     }
@@ -80,5 +81,6 @@ export default {
   z-index: 9999;
   mix-blend-mode: difference;
   pointer-events: none;
+  opacity: 0;
 }
 </style>
